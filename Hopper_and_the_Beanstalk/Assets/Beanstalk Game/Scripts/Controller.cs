@@ -77,6 +77,7 @@ public class Controller : MonoBehaviour {
 		}
 		else if(jumpInput == 0 && Grounded()){
 			velocity.y = 0;
+			m_anim.SetBool("Jump", false);
 		}
 		else{
 			velocity.y -= gravity;
