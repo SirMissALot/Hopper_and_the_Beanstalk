@@ -94,6 +94,7 @@ public class Controller : MonoBehaviour {
 		}
 		else{
 			velocity.y -= gravity;
+			
 		}
 	}
 

@@ -10,7 +10,8 @@ public class BeanstalkCreation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Instantiate(beanstalk,beanstalkbase.position+offset,Quaternion.identity);
+		GameObject clone = Instantiate(beanstalk,beanstalkbase.position+offset,Quaternion.identity);
+		clone.transform.parent = transform;
 	}
 	
 	// Update is called once per frame
