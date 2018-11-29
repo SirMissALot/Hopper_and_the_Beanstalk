@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
     [Header("PLAYER STATUS")]
 	private float speed = 6.0f;
     [SerializeField]
+    private float turnSpeed = 5f;
+    [SerializeField]
     private float jumpSpeed = 8.0f;
     [SerializeField]
     private float gravity = 20.0f;
@@ -38,13 +40,20 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-		GetInput();
+        if(Alive){
+		    GetInput();
+        } else{
+            forwardInput = 0;
+            turnInput = 0;
+        }
 
 		Grounded = controller.isGrounded;
 
         if (controller.isGrounded)
         {
+            m_anim.SetBool("Falling", false);
 			m_anim.SetBool("Jump", false);
+        
 
             // We are grounded, so recalculate
             // move direction directly from axes
@@ -53,7 +62,7 @@ public class PlayerController : MonoBehaviour {
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection = moveDirection * speed;
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButton("Jump") && Alive)
             {
                 moveDirection.y = jumpSpeed;
 				m_anim.SetBool("Jump", true);
@@ -62,7 +71,7 @@ public class PlayerController : MonoBehaviour {
 
 		
         // Turn Input
-		transform.Rotate(0,turnInput,0);
+		transform.Rotate(0,turnInput*turnSpeed,0);
         // Apply gravity
 		moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
         // Move the controller
@@ -76,6 +85,14 @@ public class PlayerController : MonoBehaviour {
 		m_anim.SetFloat("VelX", forwardInput);
 		m_anim.SetFloat("VelY", turnInput);
 	}
+
+   void OnTriggerEnter(Collider other){
+		if(other.tag == "Death"){
+            Alive = false;
+			m_anim.SetBool("Falling",true);
+		}
+	}
+    
 
     
 

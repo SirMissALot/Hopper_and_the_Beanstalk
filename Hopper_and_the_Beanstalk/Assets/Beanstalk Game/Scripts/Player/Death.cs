@@ -29,10 +29,5 @@ public class Death : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other){
-		if(other.tag == "Player"){
-			Debug.Log("Dead!");
-		}
-	}
 }
  

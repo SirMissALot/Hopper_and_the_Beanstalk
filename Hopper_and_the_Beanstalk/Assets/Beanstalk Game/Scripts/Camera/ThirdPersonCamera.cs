@@ -19,6 +19,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+		if(Player.GetComponent<PlayerController>().isAlive){
 		Vector3 targetPosition = cameraLookTarget.position + Player.transform.forward * offset.z + 
 												   Player.transform.up * offset.y + 
 												   Player.transform.right * offset.x;
@@ -37,7 +38,11 @@ public class ThirdPersonCamera : MonoBehaviour {
         }									   
 
 		transform.position = Vector3.Lerp(transform.position, targetPosition, damping * Time.deltaTime);
-		transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, damping);										   
+		transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, damping);	
+		} else {
+			transform.position = transform.position;
+		}
+
 	}
 
 }
