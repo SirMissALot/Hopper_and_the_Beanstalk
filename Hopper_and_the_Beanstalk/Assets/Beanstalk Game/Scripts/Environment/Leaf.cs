@@ -20,8 +20,8 @@ public class Leaf : MonoBehaviour {
 	}
 
 	private IEnumerator LeafCountdown(){
-
 		yield return new WaitForSeconds(timer);
+		GameManager.Instance.Score+=1;
 		Instantiate(leaf,playerPos,Quaternion.identity);
 		Destroy(gameObject);
 	}

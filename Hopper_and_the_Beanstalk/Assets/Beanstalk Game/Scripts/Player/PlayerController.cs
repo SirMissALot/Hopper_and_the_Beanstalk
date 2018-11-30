@@ -22,19 +22,20 @@ public class PlayerController : MonoBehaviour {
     private Animator m_anim;
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
-	private float forwardInput, turnInput, jumpInput;
-    private bool Grounded, Alive;
+	private float forwardInput, turnInput;
+    private bool Grounded, Jump, Alive;
 
     // Getter
     public bool isGrounded{get{return Grounded;}}
     public bool isAlive{get{return Alive;}}
-
+   
     void Start()
     {	
 		m_anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>(); 
 		forwardInput = turnInput = 0;
         Alive = true;
+        Jump = false;
         Grounded = controller.isGrounded;
     }
 
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour {
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection = moveDirection * speed;
 
-            if (Input.GetButton("Jump") && Alive)
+            if (Jump && Alive || Input.GetButtonDown("Jump") && Alive)
             {
                 moveDirection.y = jumpSpeed;
 				m_anim.SetBool("Jump", true);
@@ -76,6 +77,8 @@ public class PlayerController : MonoBehaviour {
 		moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
         // Move the controller
         controller.Move(moveDirection * Time.deltaTime);
+        // Stop jumping
+        Jump = false;
 		
     }
 
@@ -85,6 +88,10 @@ public class PlayerController : MonoBehaviour {
 		m_anim.SetFloat("VelX", forwardInput);
 		m_anim.SetFloat("VelY", turnInput);
 	}
+
+    public void Hop(){
+        Jump = true;
+    }
 
    void OnTriggerEnter(Collider other){
 		if(other.tag == "Death"){
