@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeathMenu : MonoBehaviour {
 
@@ -13,6 +14,10 @@ public class DeathMenu : MonoBehaviour {
 	private GameObject leafCount;
 	[SerializeField]
 	private GameObject joysticks;
+	[SerializeField]
+	private GameObject count;
+	[SerializeField]
+	private GameObject replay;
 	[SerializeField]
 	private Text textCount;
 	
@@ -32,20 +37,36 @@ public class DeathMenu : MonoBehaviour {
 		Alive = Player.GetComponent<PlayerController>().isAlive;
 
 		if(!Alive){
-			anim.SetTrigger("FadeIn");
+			anim.SetBool("Dead", true);
 		} else{
 			textCount.text = GameManager.Instance.Score.ToString();
 		}
 	}
 
+	public void resetGame(){
+		SceneManager.LoadScene("Main", LoadSceneMode.Single);
+		GameManager.Instance.Score = 0;
+	}
+
 	public void ShowMenu(){
 		leafCollected.SetActive(true);
 		leafCount.SetActive(true);
-		joysticks.SetActive(false);
+		replay.SetActive(true);
 	}
+
 	public void HideMenu(){
 		leafCollected.SetActive(false);
 		leafCount.SetActive(false);
+		replay.SetActive(false);
+	}
+
+	public void ShowUI(){
 		joysticks.SetActive(true);
+		count.SetActive(true);
+	}
+
+	public void HideUI(){
+		joysticks.SetActive(false);
+		count.SetActive(false);
 	}
 }
