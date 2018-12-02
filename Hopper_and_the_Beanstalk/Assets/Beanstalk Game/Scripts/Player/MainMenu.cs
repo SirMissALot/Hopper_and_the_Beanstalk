@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour {
 		anim = GetComponent<Animator>();
 	}
 	
+	// Loading Function
 	public void Loadlevel(string levelName) {
 		StartCoroutine(AsyncLoading(levelName));	
 	}
@@ -38,6 +39,7 @@ public class MainMenu : MonoBehaviour {
 
 	}
 
+	// Camera animation
 	public void StartGame(){
 		Menu.SetActive(false);
 		anim.SetTrigger("Play");

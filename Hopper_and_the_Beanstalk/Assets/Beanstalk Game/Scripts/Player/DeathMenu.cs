@@ -43,28 +43,29 @@ public class DeathMenu : MonoBehaviour {
 		}
 	}
 
+	// Replay Level
 	public void resetGame(){
 		SceneManager.LoadScene("Main", LoadSceneMode.Single);
 		GameManager.Instance.Score = 0;
 	}
 
+	// Death screen
 	public void ShowMenu(){
 		leafCollected.SetActive(true);
 		leafCount.SetActive(true);
 		replay.SetActive(true);
 	}
-
 	public void HideMenu(){
 		leafCollected.SetActive(false);
 		leafCount.SetActive(false);
 		replay.SetActive(false);
 	}
 
+	// Controller UIs
 	public void ShowUI(){
 		joysticks.SetActive(true);
 		count.SetActive(true);
 	}
-
 	public void HideUI(){
 		joysticks.SetActive(false);
 		count.SetActive(false);
